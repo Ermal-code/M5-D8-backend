@@ -10,12 +10,19 @@ const {
   catchAllErrorHandler,
 } = require("./errorHandling");
 
+//Routes
+const attendeesRouter = require("./services/attendees");
+
 // Instances
 const server = express();
+
+// PORT
+const port = process.env.PORT || 3003;
 
 // USE
 server.use(cors());
 server.use(express.json());
+server.use("/attendees", attendeesRouter);
 
 //Errors
 server.use(badRequestErrorHandler);
@@ -23,9 +30,6 @@ server.use(notFoundErrorHandler);
 server.use(forbiddenErrorHandler);
 server.use(unauthorizedErrorHandler);
 server.use(catchAllErrorHandler);
-
-// PORT
-const port = process.env.PORT || 3003;
 
 console.log(listEndpoints(server));
 
