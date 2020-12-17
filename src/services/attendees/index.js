@@ -42,6 +42,8 @@ attendeesRoute.post("/", validateErrors, async (req, res, next) => {
 
       await writeAttendees(attendees);
 
+      res.status(201).send(newAttendee);
+
       sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
       const msg = {
@@ -55,9 +57,6 @@ attendeesRoute.post("/", validateErrors, async (req, res, next) => {
               our event,
             </strong>`,
       };
-
-      res.status(201).send(newAttendee);
-
       await sgMail.send(msg);
       // res.send("Email sent");
     } else {
